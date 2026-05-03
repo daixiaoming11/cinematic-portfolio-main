@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -20,6 +20,7 @@ import { Footer } from "@/components/ui/Footer";
 import ScrollButton from "@/components/ui/ScrollButton";
 import Scene from "@/features/world/Scene";
 import { useGLTF } from "@react-three/drei";
+import { SectionLink } from "../ux/SectionLink";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);
@@ -92,6 +93,7 @@ export default function CinematicSceneShowcase() {
         },
       });
 
+      // Animate camera and target positions based on scroll progress
       scenePerspectives.forEach((perspective) => {
         const startProgress = perspective.scrollProgress.start / 100;
         const endProgress = perspective.scrollProgress.end / 100;
@@ -131,6 +133,7 @@ export default function CinematicSceneShowcase() {
         );
       });
 
+      // Animate text for each section based on scroll position
       scenePerspectives.forEach((perspective, index) => {
         const textEl = textRefs.current[index];
         if (textEl) {
@@ -141,13 +144,14 @@ export default function CinematicSceneShowcase() {
 
           const titleEl = textEl.querySelector("h2");
           const subtitleEl = textEl.querySelector("p");
+          const sectionLinkEl = textEl.querySelector(".section-link-container");
 
           if (titleEl && subtitleEl) {
             const titleSplit = new SplitText(titleEl, { type: "chars" });
             const subtitleSplit = new SplitText(subtitleEl, { type: "chars" });
             splitInstancesRef.current.push(titleSplit, subtitleSplit);
 
-            const textTimeline = gsap.timeline({
+            const sectionTimeline = gsap.timeline({
               scrollTrigger: {
                 trigger: containerRef.current,
                 start: `${perspective.scrollProgress.start}% top`,
@@ -162,7 +166,11 @@ export default function CinematicSceneShowcase() {
                 opacity: 1,
               });
 
-              textTimeline.to([subtitleSplit.chars, titleSplit.chars], {
+              if (sectionLinkEl) {
+                gsap.set(sectionLinkEl, { opacity: 1, x: 0 });
+              }
+
+              sectionTimeline.to([subtitleSplit.chars, titleSplit.chars, sectionLinkEl].filter(Boolean), {
                 x: 100,
                 opacity: 0,
                 duration: 1,
@@ -172,9 +180,9 @@ export default function CinematicSceneShowcase() {
             } else {
               const isLastPerspective = index === scenePerspectives.length - 1;
 
-              textTimeline
+              sectionTimeline
                 .fromTo(
-                  [subtitleSplit.chars, titleSplit.chars],
+                  [subtitleSplit.chars, titleSplit.chars, sectionLinkEl].filter(Boolean),
                   { x: -100, opacity: 0 },
                   {
                     x: 0,
@@ -185,7 +193,7 @@ export default function CinematicSceneShowcase() {
                   },
                 )
                 .to({}, { duration: isLastPerspective ? 1.0 : 0.5 })
-                .to([subtitleSplit.chars, titleSplit.chars], {
+                .to([subtitleSplit.chars, titleSplit.chars, sectionLinkEl].filter(Boolean), {
                   x: 100,
                   opacity: 0,
                   duration: 0.25,
@@ -244,7 +252,7 @@ export default function CinematicSceneShowcase() {
         </Canvas>
       </div>
 
-      <ScrollButton/>
+      <ScrollButton />
 
       <div className="fixed inset-0 pointer-events-none z-10">
         {scenePerspectives.map((perspective, index) => (
@@ -263,19 +271,18 @@ export default function CinematicSceneShowcase() {
             </HoverFlickerText>
             <p className="text-[1.25vw] max-md:text-l leading-[1.4] text-white/70 font-light drop-shadow-lg">
               {perspective.subtitle}
+              
             </p>
+            <SectionLink links={perspective.links} img={perspective.img} />
           </div>
         ))}
       </div>
-
-      
 
       <div
         ref={smoothWrapperRef}
         id="smooth-wrapper"
         className="relative z-20 pointer-events-none"
       >
-        
         <div ref={smoothContentRef} id="smooth-content">
           <div ref={containerRef} style={{ height: "900svh" }} />
           <Footer />
