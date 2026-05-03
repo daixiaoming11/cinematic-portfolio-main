@@ -3,6 +3,7 @@ export interface ScenePerspective {
   subtitle: string;
   sectionId?: string; // Optional ID to link with navigation
   links?: string[]; // Optional array of links related to the perspective
+  img?: string[]; // Optional array of image URLs related to the perspective
   position:
     | 'top'
     | 'top-left'
@@ -36,7 +37,7 @@ export const scenePerspectives: ScenePerspective[] = [
   {
     title: 'Curriculum Vitae',
     subtitle: 'Feel free to take a look at my latest CV',
-    links:["https://curriculum.com"], //TODO
+    links:["/assets/Latest-CV.pdf"],
     sectionId: 'cv',
     position: 'left',
     camera: { x: 3, y: 8, z: 10 },
@@ -45,8 +46,10 @@ export const scenePerspectives: ScenePerspective[] = [
   },
   {
     title: 'Projects',
-    subtitle: 'Gander around and see all my projects',
+    subtitle: 'Take a look at some of my projects and case studies',
     position: 'right',
+    links:["/fashion-statement", "/fashion-statement", "/fashion-statement"], 
+    img:["./img/Bank.png", "./img/Black-Swan-Jewelry.png", "./img/Clarity.png"],
     sectionId: 'projects',
     camera: { x: -10, y: 15, z: 0 },
     target: { x: 0, y: 15, z: 0 },
@@ -72,8 +75,9 @@ export const scenePerspectives: ScenePerspective[] = [
   },
   {
     title: 'Email',
-    subtitle: 'alyssadaisalazar@gmail.com',
+    subtitle: 'Contact me via email:',
     sectionId: 'contact',
+    links: ["xiaomingdai283@gmail.com:"],
     position: 'center',
     camera: { x: 5, y: 30, z: 10 },
     target: { x: 0, y: 20, z: 0 },
@@ -83,6 +87,7 @@ export const scenePerspectives: ScenePerspective[] = [
     title: 'Github',
     subtitle: 'Check out my github for more projects and code samples',
     position: 'bottom-right',
+    links: ["https://github.com/daixiaoming11"],
     camera: { x: 5, y: 25, z: 10 },
     target: { x: 0, y: 20, z: 0 },
     scrollProgress: { start: 62.7, end: 69.5 },
@@ -90,6 +95,7 @@ export const scenePerspectives: ScenePerspective[] = [
   {
     title: 'Google Scholar',
     subtitle: 'Want to collaborate on a research?',
+    links: ["https://scholar.google.com/citations?user=Daixiaoming11"],
     position: 'bottom-left',
     camera: { x: 15, y: 20, z: 5 },
     target: { x: 0, y: 24, z: 0 },
@@ -98,6 +104,7 @@ export const scenePerspectives: ScenePerspective[] = [
   {
     title: 'Community',
     subtitle: 'Find me and my community in Discord',
+    links: ["https://discord.com/invite/1259384257365934195"],
     position: 'top',
     camera: { x: 25, y: 15, z: 0 },
     target: { x: 0, y: 20, z: 0 },

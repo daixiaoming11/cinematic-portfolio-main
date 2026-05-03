@@ -40,14 +40,14 @@ export function Footer() {
           {/* Column 2: Contact */}
           <div className="flex flex-col gap-6">
             <h4 className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">
-              Contact Us
+              Contact Me
             </h4>
             <div className="flex flex-col gap-2 text-sm text-white/80 font-light">
               <a
-                href="mailto:alyssadai@alyssa.com"
+                href="mailto:xiaomingdai283@gmail.com"
                 className="hover:text-[#a080cc] transition-colors duration-300 w-fit"
               >
-                <HoverFlickerText>alyssadai@alyssa.com</HoverFlickerText>
+                <HoverFlickerText>xiaomingdai283@gmail.com</HoverFlickerText>
               </a>
               <p className="text-white/50 mt-2">
                 Frisco, TX
@@ -60,7 +60,7 @@ export function Footer() {
           {/* Column 3: Site Links */}
           <div className="flex flex-col gap-6">
             <h4 className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">
-              Links
+              Sections
             </h4>
             <nav className="flex flex-col gap-3 text-sm text-white/80 font-light">
               {["Home", "Resume", "Projects", "Newsletter"].map((link) => (
@@ -78,7 +78,7 @@ export function Footer() {
           {/* Column 4: Socials */}
           <div className="flex flex-col gap-6">
             <h4 className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase">
-              Follow Us
+              Follow Me
             </h4>
             <nav className="flex flex-col gap-3 text-sm text-white/80 font-light">
               {["LinkedIn", "Github", "Twitter"].map((social) => (

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useHelper, Environment } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import { useState, useRef, useEffect } from "react";
 import * as THREE from "three";
@@ -20,8 +20,6 @@ export default function Scene({ cameraAnimRef, targetAnimRef, children }: any) {
   const { scene } = useThree();
   const [lightTarget, setLightTarget] = useState<THREE.Object3D | null>(null);
   const sunLightRef = useRef<THREE.DirectionalLight>(null);
-
-  useHelper(sunLightRef as any, THREE.DirectionalLightHelper, 5, "red");
 
   useEffect(() => {
     if (scene) {

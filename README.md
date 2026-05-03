@@ -1,6 +1,6 @@
 # Cinematic 3D Scroll Portfolio
-
-Portfolio inspired by GSAP creatikons.
+![alt text](image.png)
+Portfolio inspired by GSAP creations.
 
 ## Installation
 
