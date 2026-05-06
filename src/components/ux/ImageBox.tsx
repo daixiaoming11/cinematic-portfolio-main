@@ -33,14 +33,16 @@ export function ImageBox({ url, src }: ImageBoxProps) {
   }, []);
 
   return (
-    <figure className="my-4 overflow-hidden rounded-lg border border-white/10 bg-white/5">
-      <img
-        ref={imageRef}
-        src={src}
-        alt={`${fileName} descriptor`}
-        className="w-full h-auto object-cover hover:opacity-100 transition-opacity duration-500"
-        loading="lazy"
-      />
+    <figure className="my-4 overflow-hidden rounded-lg border border-white/10 bg-white/5 w-[85vw] md:w-64 flex-shrink-0 snap-center">
+      <Link to={url} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
+        <img
+          ref={imageRef}
+          src={src}
+          alt={`${fileName} descriptor`}
+          className="w-full aspect-video object-cover hover:opacity-100 transition-opacity duration-500"
+          loading="lazy"
+        />
+      </Link>
       <figcaption className="sr-only"><Link to={url} target="_blank" rel="noopener noreferrer">
         {fileName}
       </Link></figcaption>
