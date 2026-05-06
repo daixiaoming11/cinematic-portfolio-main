@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HoverFlickerText } from "../ux/HoverFlickerText";
 // 1. Import your scene data so the header knows the timeline math
 import { scenePerspectives } from "@/lib/data/scene-data";
+import gsap from "gsap";
 
 interface HeaderProps {
   demoTitle?: string;
@@ -27,6 +28,9 @@ export function Header({
   ],
 }: HeaderProps) {
   const [activeId, setActiveId] = useState(demos[0]?.href || "");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
   // 2. The Math-Based Scroll Tracker
   // This replaces IntersectionObserver, which fails on fixed elements.
@@ -56,11 +60,31 @@ export function Header({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Mobile Menu Animation
+  useEffect(() => {
+    if (isMenuOpen) {
+      gsap.to(menuRef.current, {
+        x: 0,
+        duration: 0.6,
+        ease: "power4.out",
+      });
+      gsap.fromTo(
+        menuLinksRef.current,
+        { x: 50, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.4, stagger: 0.1, delay: 0.2 }
+      );
+    } else {
+      gsap.to(menuRef.current, {
+        x: "100%",
+        duration: 0.5,
+        ease: "power4.in",
+      });
+    }
+  }, [isMenuOpen]);
+
   // 3. The Percentage-Based Scroll Handler
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    setIsMenuOpen(false);
     if (href.startsWith("#")) {
       e.preventDefault();
       const id = href.replace("#", "");
@@ -125,7 +149,13 @@ export function Header({
               aria-label={demoTitle}
               className="block hover:scale-105 transition-transform duration-300"
             >
-              <img src="./img/alyssa-logo.png" alt="Logo" width="50"/>
+              <img 
+                src="./img/alyssa-logo.png" 
+                alt="Logo" 
+                width="50" 
+                height="50"
+                loading="eager"
+              />
             </Link>
           </div>
 
@@ -152,6 +182,7 @@ export function Header({
           <div className="md:hidden flex flex-1 justify-end items-center pr-2">
             <button
               aria-label="Open Menu"
+              onClick={() => setIsMenuOpen(true)}
               className="text-white/80 hover:text-white p-2"
             >
               <svg
@@ -172,6 +203,52 @@ export function Header({
           </div>
         </div>
       </header>
+
+      {/* Mobile Sliding Menu */}
+      <div
+        ref={menuRef}
+        className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-xl translate-x-full md:hidden flex flex-col items-center justify-center"
+      >
+        <button
+          onClick={() => setIsMenuOpen(false)}
+          className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
+        >
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <nav className="flex flex-col items-center gap-8">
+          {demos.map((demo, index) => {
+            const isCurrent = activeId === demo.href;
+            return (
+              <Link
+                key={`mobile-${index}`}
+                to={demo.href}
+                ref={(el) => {
+                  menuLinksRef.current[index] = el;
+                }}
+                onClick={(e) => handleNavClick(e, demo.href)}
+                className={`text-3xl font-light tracking-widest transition-colors ${
+                  isCurrent ? "text-[#a080cc]" : "text-white/70"
+                }`}
+              >
+                <HoverFlickerText>{demo.label.toUpperCase()}</HoverFlickerText>
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
     </>
   );
 }

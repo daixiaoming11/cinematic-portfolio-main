@@ -33,7 +33,15 @@ export default function Loader({ isLoading, className, classNameLoader }: Loader
             className={`fixed inset-0 z-[10000] transition-opacity duration-500 ${className} ${isLoading ? "opacity-100" : "opacity-0 pointer-events-none"
                 }`}
         >
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100px] h-[1px] ${classNameLoader} animate-loader`} />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-8 w-full">
+                <div className="flex flex-col items-center gap-2">
+                    <h1 className="text-white text-xs md:text-sm font-light tracking-[0.4em] uppercase opacity-80 animate-pulse">
+                        Entering Alyssa's Portfolio
+                    </h1>
+                    <p className="text-white/30 text-[10px] italic font-serif tracking-widest">A cinematic journey through code & design</p>
+                </div>
+                <div className={`w-[120px] h-[1px] ${classNameLoader} animate-loader opacity-50`} />
+            </div>
         </div>
     )
 }

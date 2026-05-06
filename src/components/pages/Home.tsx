@@ -265,11 +265,11 @@ export default function CinematicSceneShowcase() {
             className={`absolute max-md:w-full pointer-events-auto ${getPositionClasses(perspective.position)}`}
           >
             <HoverFlickerText>
-              <h2 className="text-[4vw] max-md:text-2xl font-bold leading-[1.1] mb-2 tracking-tight text-white drop-shadow-2xl">
+              <h2 className="text-[4vw] max-md:text-4xl font-bold leading-[1.1] mb-2 tracking-tight text-white drop-shadow-2xl">
                 {perspective.title}
               </h2>
             </HoverFlickerText>
-            <p className="text-[1.25vw] max-md:text-l leading-[1.4] text-white/70 font-light drop-shadow-lg">
+            <p className="text-[1.25vw] max-md:text-lg leading-[1.4] text-white/70 font-light drop-shadow-lg">
               {perspective.subtitle}
               
             </p>
