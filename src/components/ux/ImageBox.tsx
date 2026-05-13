@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { Link } from "react-router-dom";
 
 interface ImageBoxProps {
   url: string;
@@ -34,7 +33,7 @@ export function ImageBox({ url, src }: ImageBoxProps) {
 
   return (
     <figure className="my-4 overflow-hidden rounded-lg border border-white/10 bg-white/5 w-[85vw] md:w-64 flex-shrink-0 snap-center">
-      <Link to={url} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
+      <a href={url} target="_blank" rel="noopener noreferrer" className="block w-full h-full">
         <img
           ref={imageRef}
           src={src}
@@ -42,10 +41,10 @@ export function ImageBox({ url, src }: ImageBoxProps) {
           className="w-full aspect-video object-cover hover:opacity-100 transition-opacity duration-500"
           loading="lazy"
         />
-      </Link>
-      <figcaption className="sr-only"><Link to={url} target="_blank" rel="noopener noreferrer">
+      </a>
+      <figcaption className="sr-only"><a href={url} target="_blank" rel="noopener noreferrer">
         {fileName}
-      </Link></figcaption>
+      </a></figcaption>
     </figure>
   );
 }
